@@ -31,7 +31,7 @@ def forget(keep_last: int) -> None:
     # independently, so backing up only 'screenshots' today can't cause an
     # older but only-existing 'zen-profile' snapshot to be forgotten.
     shell.run(
-        ["restic", "forget", "--keep-last", str(keep_last), "--group-by", "host,tags"],
+        ["restic", "forget", "--keep-last", str(keep_last), "--group-by", "tags"],
         env=_env(),
     )
     print("\nPruning now-unreferenced data (this can take a while)...")
