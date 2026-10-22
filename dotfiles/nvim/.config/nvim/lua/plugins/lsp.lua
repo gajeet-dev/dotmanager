@@ -49,9 +49,18 @@ return {
   {
     "neovim/nvim-lspconfig",
     config = function()
-      local settings = require("servers")
-      for server, opts in pairs(settings) do
-        vim.lsp.config(server, { settings = { [server] = opts } })
+      local servers = require("servers")
+      for server, opts in pairs(servers) do
+        local config = {}
+        if opts.cmd or opts.settings then
+          config = opts
+          if not config.settings then
+            config.settings = { [server] = {} }
+          end
+        else
+          config = { settings = { [server] = opts } }
+        end
+        vim.lsp.config(server, config)
         vim.lsp.enable(server)
       end
     end,

@@ -1,7 +1,7 @@
 return {
   basedpyright = require("servers.basedpyright"),
   lua_ls = {},
-  jdtls = {},
+  jdtls = require("servers.jdtls"),
   ruff = {},
 
   ts_ls = {},
