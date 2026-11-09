@@ -8,22 +8,29 @@ it), leaving the rest of the user's config.toml untouched. Reloads via
 `herdr server reload-config`, which herdr's own docs confirm applies UI
 settings (including theme) live without restarting panes.
 
-Note: v0.8.0 has no `sidebar_bg` override -- herdr's own docs say the
-sidebar then "keeps the host terminal background", so its color follows
-whatever kitty_theme.py set kitty to, not this file. herdr's own
-[theme.custom] still controls the accent/tab-highlight colors directly
-(verified live: switching themes recolors the active-tab highlight even
-with kitty's background held constant).
-
 Each profile below names the closest built-in herdr theme (herdr ships
 catppuccin, gruvbox, one-light, and others, but nothing "macchiato" or
 "github" specifically -- see src/config/theme.rs in
 herdrdev/herdr) plus a full [theme.custom] override so the result always
 matches this profile's exact palette, not just the closest built-in's
 own colors. Role names below match the installed herdr version's
-CustomThemeColors struct -- verified against v0.8.0 specifically, since
-its `master` branch already has three more fields (sidebar_bg,
-active_row_bg, selection_bg) this version doesn't recognize yet.
+CustomThemeColors struct -- verified against v0.8.2.
+
+sidebar_bg/active_row_bg/selection_bg (added in herdr 0.8.2, absent in
+0.8.0 -- upgrade first if these get silently ignored) fix a real bug that
+existed without them: with only the older role set, the sidebar's active-
+row highlight fell back to a built-in-theme default color uncorrelated
+with this file's [theme.custom] overrides, so a custom theme's dim
+subtext0 (child agent rows, e.g. "claude" under a Space) could end up
+nearly unreadable against a mismatched highlight -- confirmed live on
+gruvbox-dark. Set to this theme's own surface tones so the highlight
+always has correct contrast against text/subtext0: sidebar_bg=panel_bg
+(sidebar matches the rest of the UI instead of the host terminal's
+background), active_row_bg=surface1 (the persistent active Space/Agent
+highlight), selection_bg=surface_dim (the transient Navigate-mode cursor
+row -- kept a shade further from panel_bg than active_row_bg so the two
+stay visually distinguishable when both apply to the same row, per
+herdr's own docs).
 
 These per-theme role maps are hand-picked, not derived from the theme's
 [palette] -- herdr wants more shades (surface0/1, overlay0/1, ...) than
@@ -50,6 +57,9 @@ PROFILES = {
         "custom": {
             "accent": "#d79921",
             "panel_bg": "#282828",
+            "sidebar_bg": "#282828",
+            "active_row_bg": "#504945",
+            "selection_bg": "#665c54",
             "surface0": "#3c3836",
             "surface1": "#504945",
             "surface_dim": "#665c54",
@@ -71,6 +81,9 @@ PROFILES = {
         "custom": {
             "accent": "#c6a0f6",
             "panel_bg": "#24273a",
+            "sidebar_bg": "#24273a",
+            "active_row_bg": "#494d64",
+            "selection_bg": "#5b6078",
             "surface0": "#363a4f",
             "surface1": "#494d64",
             "surface_dim": "#5b6078",
@@ -92,6 +105,9 @@ PROFILES = {
         "custom": {
             "accent": "#8839ef",
             "panel_bg": "#eff1f5",
+            "sidebar_bg": "#eff1f5",
+            "active_row_bg": "#bcc0cc",
+            "selection_bg": "#acb0be",
             "surface0": "#ccd0da",
             "surface1": "#bcc0cc",
             "surface_dim": "#acb0be",

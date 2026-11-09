@@ -1,6 +1,6 @@
-
 require("configs.monitors")
 require("configs.environment")
+require("configs.load_env")
 require("configs.settings")
 require("configs.autostart")
 require("configs.keybindings")

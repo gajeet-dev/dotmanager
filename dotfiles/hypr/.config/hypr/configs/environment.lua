@@ -2,6 +2,10 @@
 -- ### ENVIRONMENT VARIABLES ###
 -- #############################
 
+
+
+
+
 -- See https://wiki.hyprland.org/Configuring/Environment-variables/
 local vars = require("configs.variables")
 

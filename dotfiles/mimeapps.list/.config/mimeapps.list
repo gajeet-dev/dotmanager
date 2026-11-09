@@ -150,3 +150,4 @@ video/x-matroska=mpv.desktop
 video/mp4=mpv.desktop
 application/vnd.sqlite3=dbeaver-ce.desktop
 x-scheme-handler/claude-cli=claude-code-url-handler.desktop
+x-scheme-handler/omniget=omniget-handler.desktop

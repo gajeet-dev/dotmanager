@@ -59,7 +59,17 @@ def restore_tag(tag: str, original: bool = False) -> bool:
 
     dest.mkdir(parents=True, exist_ok=True)
     result = shell.run(
-        ["restic", "restore", "latest", "--tag", tag, "--target", str(dest)],
+        [
+            "restic",
+            "restore",
+            "latest",
+            "--tag",
+            tag,
+            "--target",
+            str(dest),
+            "-o",
+            "rclone.connections=1",
+        ],
         check=False,
         env=_env(),
     )
